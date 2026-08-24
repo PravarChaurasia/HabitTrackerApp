@@ -1,0 +1,534 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AE2CCF8AC2534611B70899FC /* HabitTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E751AE06D31949B6A5BA92FB /* HabitTrackerApp.swift */; };
+		C40D72B1D7C74878BD00F6E9 /* Completion.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB09B48BCC4C43B930DB88 /* Completion.swift */; };
+		6D666890ED794127805FD135 /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CE292195754A7EA8C32D6E /* Habit.swift */; };
+		5971AF80F7E54C78B856600C /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCEE681C9F4547BCB4436AD5 /* Tag.swift */; };
+		069F1D08160E426E940AD56B /* CompleteHabitIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F7497E53C945D698A8E0DD /* CompleteHabitIntent.swift */; };
+		ABADE355645E4801A5054EAB /* DataExportImport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10056B25C8644735B03965AA /* DataExportImport.swift */; };
+		DFFBE0BD1B374F5E8BDA11B2 /* HabitActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7423CB5CFDFE4953AADFC2C0 /* HabitActions.swift */; };
+		F78B583AE53F434A92A88927 /* HabitScheduling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A50095B18EF4DB6A833A759 /* HabitScheduling.swift */; };
+		53F07F346535466E98CD8409 /* HabitTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C985AB879F4E1F81CB127A /* HabitTemplates.swift */; };
+		D2F019FC4C2F41A2AF1F0045 /* ReminderScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E818651CBF410E9E3F7400 /* ReminderScheduler.swift */; };
+		EF8C15BFBDB847FCA2BC8B47 /* StreakCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E53BD49A89F487CBC7CFF90 /* StreakCalculator.swift */; };
+		7CDDB3036EB34C65B086EC4D /* WidgetSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43A38B61871F404FA0245ED6 /* WidgetSnapshot.swift */; };
+		BF4DA80E251042FDB70C147B /* CalendarDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C72048F577841E29C59EE82 /* CalendarDay.swift */; };
+		B851C129390A481CB5F89426 /* HabitCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F99983AF6374DB987801709 /* HabitCatalog.swift */; };
+		EF3E5D27F4634CEDB480D9C9 /* HabitEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D5609F7DAF4587899A986C /* HabitEnums.swift */; };
+		AC3A3B0587AF445396B6CEFE /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12ACB18DF3C245638CC53697 /* Haptics.swift */; };
+		2086313EB3B14F56B275EB6B /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EAFCC1009364343B4669256 /* SharedStore.swift */; };
+		22F381A8A1874E94B27623FA /* WidgetBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA2CCCF41754EEDAC942608 /* WidgetBridge.swift */; };
+		691076EDC6C84E2390148FAC /* HabitEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E367B010C5F49EF88AEB802 /* HabitEditorView.swift */; };
+		1C78A2E2A30C452AA3F2875F /* HabitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B581E2ADCC54C42A9E7C8F3 /* HabitsView.swift */; };
+		A26C6E3C367C427981BC9235 /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC2665CA68AB4BFD91FA98E8 /* InsightsView.swift */; };
+		13E650C0ABAD4356B810E36E /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E7B80FBE7F41AD8314566C /* OnboardingView.swift */; };
+		CA07898BF06A42CD9846C69E /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE83689186049C5B3B308A4 /* RootView.swift */; };
+		C834B3DDA82C406585F1E649 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89988423629A4BA7A17B7D11 /* SettingsView.swift */; };
+		942486B2AD124207876FCFC6 /* SharedComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA954C233FD4A1BADAC5229 /* SharedComponents.swift */; };
+		02F065450D6F4708B7690718 /* TagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C16B6338F0A4DD399475EED /* TagsView.swift */; };
+		B1D50BD61C284441A3C7993C /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98D7A85049E444E9892922C /* TodayView.swift */; };
+		06617CF326D540B88181C552 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B187B6D75F1E4712A384F766 /* Assets.xcassets */; };
+		4EA8B4D7E73E475BB2CFE1E7 /* HabitTrackerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FA73E6428F49D8BD211D6C /* HabitTrackerWidget.swift */; };
+		AA00000100000000000000W1 /* HabitTrackerWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CC0000010000000000000010 /* HabitTrackerWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FF0000010000000000000015 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF0000010000000000000005 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF0000010000000000000010;
+			remoteInfo = HabitTrackerWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FF0000010000000000000014 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				AA00000100000000000000W1 /* HabitTrackerWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		E751AE06D31949B6A5BA92FB /* HabitTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTrackerApp.swift; sourceTree = "<group>"; };
+		BFAB09B48BCC4C43B930DB88 /* Completion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Completion.swift; sourceTree = "<group>"; };
+		A5CE292195754A7EA8C32D6E /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
+		FCEE681C9F4547BCB4436AD5 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		65F7497E53C945D698A8E0DD /* CompleteHabitIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteHabitIntent.swift; sourceTree = "<group>"; };
+		10056B25C8644735B03965AA /* DataExportImport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExportImport.swift; sourceTree = "<group>"; };
+		7423CB5CFDFE4953AADFC2C0 /* HabitActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitActions.swift; sourceTree = "<group>"; };
+		4A50095B18EF4DB6A833A759 /* HabitScheduling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitScheduling.swift; sourceTree = "<group>"; };
+		41C985AB879F4E1F81CB127A /* HabitTemplates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTemplates.swift; sourceTree = "<group>"; };
+		A5E818651CBF410E9E3F7400 /* ReminderScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderScheduler.swift; sourceTree = "<group>"; };
+		1E53BD49A89F487CBC7CFF90 /* StreakCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakCalculator.swift; sourceTree = "<group>"; };
+		43A38B61871F404FA0245ED6 /* WidgetSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshot.swift; sourceTree = "<group>"; };
+		5C72048F577841E29C59EE82 /* CalendarDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDay.swift; sourceTree = "<group>"; };
+		0F99983AF6374DB987801709 /* HabitCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCatalog.swift; sourceTree = "<group>"; };
+		33D5609F7DAF4587899A986C /* HabitEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitEnums.swift; sourceTree = "<group>"; };
+		12ACB18DF3C245638CC53697 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+		1EAFCC1009364343B4669256 /* SharedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedStore.swift; sourceTree = "<group>"; };
+		6FA2CCCF41754EEDAC942608 /* WidgetBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetBridge.swift; sourceTree = "<group>"; };
+		9E367B010C5F49EF88AEB802 /* HabitEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitEditorView.swift; sourceTree = "<group>"; };
+		0B581E2ADCC54C42A9E7C8F3 /* HabitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsView.swift; sourceTree = "<group>"; };
+		BC2665CA68AB4BFD91FA98E8 /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
+		D4E7B80FBE7F41AD8314566C /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		CEE83689186049C5B3B308A4 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		89988423629A4BA7A17B7D11 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		1EA954C233FD4A1BADAC5229 /* SharedComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedComponents.swift; sourceTree = "<group>"; };
+		7C16B6338F0A4DD399475EED /* TagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsView.swift; sourceTree = "<group>"; };
+		D98D7A85049E444E9892922C /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+		B187B6D75F1E4712A384F766 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6F107A6CA61D4B28A0264D0A /* HabitTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HabitTracker.entitlements; sourceTree = "<group>"; };
+		CC0000010000000000000001 /* HabitTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HabitTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC0000010000000000000010 /* HabitTrackerWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HabitTrackerWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		76FA73E6428F49D8BD211D6C /* HabitTrackerWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTrackerWidget.swift; sourceTree = "<group>"; };
+		AA8FA45EA547448490CDFAB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		195F3DACFFD64025822AA35B /* HabitTrackerWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HabitTrackerWidget.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DD0000010000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD0000010000000000000010 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EE0000010000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				EE0000010000000000000002 /* HabitTracker */,
+				EE0000010000000000000010 /* HabitTrackerWidget */,
+				EE0000010000000000000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EE0000010000000000000002 /* HabitTracker */ = {
+			isa = PBXGroup;
+			children = (
+				E751AE06D31949B6A5BA92FB /* HabitTrackerApp.swift */,
+				FE7D41D92FA8442D9875EB3A /* Models */,
+				B8A51D15D85F4280A48ACC81 /* Services */,
+				D96BEAF1AEB24DDCBD992078 /* Utilities */,
+				F8456AD43CD6493ABB6AD7C6 /* Views */,
+				B187B6D75F1E4712A384F766 /* Assets.xcassets */,
+				6F107A6CA61D4B28A0264D0A /* HabitTracker.entitlements */,
+			);
+			path = HabitTracker;
+			sourceTree = "<group>";
+		};
+		FE7D41D92FA8442D9875EB3A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BFAB09B48BCC4C43B930DB88 /* Completion.swift */,
+				A5CE292195754A7EA8C32D6E /* Habit.swift */,
+				FCEE681C9F4547BCB4436AD5 /* Tag.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B8A51D15D85F4280A48ACC81 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				65F7497E53C945D698A8E0DD /* CompleteHabitIntent.swift */,
+				10056B25C8644735B03965AA /* DataExportImport.swift */,
+				7423CB5CFDFE4953AADFC2C0 /* HabitActions.swift */,
+				4A50095B18EF4DB6A833A759 /* HabitScheduling.swift */,
+				41C985AB879F4E1F81CB127A /* HabitTemplates.swift */,
+				A5E818651CBF410E9E3F7400 /* ReminderScheduler.swift */,
+				1E53BD49A89F487CBC7CFF90 /* StreakCalculator.swift */,
+				43A38B61871F404FA0245ED6 /* WidgetSnapshot.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		D96BEAF1AEB24DDCBD992078 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				5C72048F577841E29C59EE82 /* CalendarDay.swift */,
+				0F99983AF6374DB987801709 /* HabitCatalog.swift */,
+				33D5609F7DAF4587899A986C /* HabitEnums.swift */,
+				12ACB18DF3C245638CC53697 /* Haptics.swift */,
+				1EAFCC1009364343B4669256 /* SharedStore.swift */,
+				6FA2CCCF41754EEDAC942608 /* WidgetBridge.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		F8456AD43CD6493ABB6AD7C6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9E367B010C5F49EF88AEB802 /* HabitEditorView.swift */,
+				0B581E2ADCC54C42A9E7C8F3 /* HabitsView.swift */,
+				BC2665CA68AB4BFD91FA98E8 /* InsightsView.swift */,
+				D4E7B80FBE7F41AD8314566C /* OnboardingView.swift */,
+				CEE83689186049C5B3B308A4 /* RootView.swift */,
+				89988423629A4BA7A17B7D11 /* SettingsView.swift */,
+				1EA954C233FD4A1BADAC5229 /* SharedComponents.swift */,
+				7C16B6338F0A4DD399475EED /* TagsView.swift */,
+				D98D7A85049E444E9892922C /* TodayView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EE0000010000000000000010 /* HabitTrackerWidget */ = {
+			isa = PBXGroup;
+			children = (
+				76FA73E6428F49D8BD211D6C /* HabitTrackerWidget.swift */,
+				AA8FA45EA547448490CDFAB6 /* Info.plist */,
+				195F3DACFFD64025822AA35B /* HabitTrackerWidget.entitlements */,
+			);
+			path = HabitTrackerWidget;
+			sourceTree = "<group>";
+		};
+		EE0000010000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CC0000010000000000000001 /* HabitTracker.app */,
+				CC0000010000000000000010 /* HabitTrackerWidget.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FF0000010000000000000001 /* HabitTracker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF0000010000000000000004 /* Build configuration list for PBXNativeTarget "HabitTracker" */;
+			buildPhases = (
+				FF0000010000000000000002 /* Sources */,
+				DD0000010000000000000001 /* Frameworks */,
+				FF0000010000000000000003 /* Resources */,
+				FF0000010000000000000014 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FF0000010000000000000016 /* PBXTargetDependency */,
+			);
+			name = HabitTracker;
+			productName = HabitTracker;
+			productReference = CC0000010000000000000001 /* HabitTracker.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FF0000010000000000000010 /* HabitTrackerWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF0000010000000000000011 /* Build configuration list for PBXNativeTarget "HabitTrackerWidget" */;
+			buildPhases = (
+				FF0000010000000000000012 /* Sources */,
+				DD0000010000000000000010 /* Frameworks */,
+				FF0000010000000000000013 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HabitTrackerWidget;
+			productName = HabitTrackerWidget;
+			productReference = CC0000010000000000000010 /* HabitTrackerWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FF0000010000000000000005 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = FF0000010000000000000006 /* Build configuration list for PBXProject "HabitTracker" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EE0000010000000000000001;
+			productRefGroup = EE0000010000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FF0000010000000000000001 /* HabitTracker */,
+				FF0000010000000000000010 /* HabitTrackerWidget */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FF0000010000000000000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				06617CF326D540B88181C552 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF0000010000000000000013 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FF0000010000000000000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE2CCF8AC2534611B70899FC /* HabitTrackerApp.swift in Sources */,
+				C40D72B1D7C74878BD00F6E9 /* Completion.swift in Sources */,
+				6D666890ED794127805FD135 /* Habit.swift in Sources */,
+				5971AF80F7E54C78B856600C /* Tag.swift in Sources */,
+				069F1D08160E426E940AD56B /* CompleteHabitIntent.swift in Sources */,
+				ABADE355645E4801A5054EAB /* DataExportImport.swift in Sources */,
+				DFFBE0BD1B374F5E8BDA11B2 /* HabitActions.swift in Sources */,
+				F78B583AE53F434A92A88927 /* HabitScheduling.swift in Sources */,
+				53F07F346535466E98CD8409 /* HabitTemplates.swift in Sources */,
+				D2F019FC4C2F41A2AF1F0045 /* ReminderScheduler.swift in Sources */,
+				EF8C15BFBDB847FCA2BC8B47 /* StreakCalculator.swift in Sources */,
+				7CDDB3036EB34C65B086EC4D /* WidgetSnapshot.swift in Sources */,
+				BF4DA80E251042FDB70C147B /* CalendarDay.swift in Sources */,
+				B851C129390A481CB5F89426 /* HabitCatalog.swift in Sources */,
+				EF3E5D27F4634CEDB480D9C9 /* HabitEnums.swift in Sources */,
+				AC3A3B0587AF445396B6CEFE /* Haptics.swift in Sources */,
+				2086313EB3B14F56B275EB6B /* SharedStore.swift in Sources */,
+				22F381A8A1874E94B27623FA /* WidgetBridge.swift in Sources */,
+				691076EDC6C84E2390148FAC /* HabitEditorView.swift in Sources */,
+				1C78A2E2A30C452AA3F2875F /* HabitsView.swift in Sources */,
+				A26C6E3C367C427981BC9235 /* InsightsView.swift in Sources */,
+				13E650C0ABAD4356B810E36E /* OnboardingView.swift in Sources */,
+				CA07898BF06A42CD9846C69E /* RootView.swift in Sources */,
+				C834B3DDA82C406585F1E649 /* SettingsView.swift in Sources */,
+				942486B2AD124207876FCFC6 /* SharedComponents.swift in Sources */,
+				02F065450D6F4708B7690718 /* TagsView.swift in Sources */,
+				B1D50BD61C284441A3C7993C /* TodayView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF0000010000000000000012 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4EA8B4D7E73E475BB2CFE1E7 /* HabitTrackerWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FF0000010000000000000016 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FF0000010000000000000010 /* HabitTrackerWidget */;
+			targetProxy = FF0000010000000000000015 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		FF0000010000000000000007 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FF0000010000000000000008 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FF0000010000000000000009 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = HabitTracker/HabitTracker.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Habit Tracker";
+				INFOPLIST_KEY_NSUserNotificationsUsageDescription = "Local reminders help you stay on track with your habits. Notifications stay on this device.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.local.HabitTracker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FF000001000000000000000A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = HabitTracker/HabitTracker.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Habit Tracker";
+				INFOPLIST_KEY_NSUserNotificationsUsageDescription = "Local reminders help you stay on track with your habits. Notifications stay on this device.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.local.HabitTracker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		FF0000010000000000000017 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = HabitTrackerWidget/HabitTrackerWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = HabitTrackerWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.local.HabitTracker.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FF0000010000000000000018 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = HabitTrackerWidget/HabitTrackerWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = HabitTrackerWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.local.HabitTracker.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FF0000010000000000000004 /* Build configuration list for PBXNativeTarget "HabitTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF0000010000000000000009 /* Debug */,
+				FF000001000000000000000A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF0000010000000000000006 /* Build configuration list for PBXProject "HabitTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF0000010000000000000007 /* Debug */,
+				FF0000010000000000000008 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF0000010000000000000011 /* Build configuration list for PBXNativeTarget "HabitTrackerWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF0000010000000000000017 /* Debug */,
+				FF0000010000000000000018 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FF0000010000000000000005 /* Project object */;
+}
