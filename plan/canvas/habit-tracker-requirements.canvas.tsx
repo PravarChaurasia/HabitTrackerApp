@@ -227,16 +227,16 @@ function TodayFrame({ filtered }: { filtered?: boolean }) {
           { label: "All", active: !filtered },
           { label: "Health", active: filtered },
           { label: "Work" },
-          { label: "Morning" },
+          { label: "Personal" },
         ]}
       />
       <Divider />
-      <WHabitRow theme={t} label="Drink water" meta="Health · streak 4" color="#4f9dde" done />
-      <WHabitRow theme={t} label="Morning walk" meta="Health · M/W/F · streak 2" color="#a3be8c" />
-      {!filtered ? <WHabitRow theme={t} label="Read 20 min" meta="Personal · streak 9" color="#b48ead" /> : null}
-      {!filtered ? <WHabitRow theme={t} label="Standup notes" meta="Work · streak 1" color="#d08770" /> : null}
+      <WHabitRow theme={t} label="Drink water" meta="07:30 · 15 min · streak 4" color="#4f9dde" done />
+      <WHabitRow theme={t} label="Morning walk" meta="07:30–08:15 · Today 08:00 · streak 2" color="#a3be8c" />
+      {!filtered ? <WHabitRow theme={t} label="Read 20 min" meta="21:00 · streak 9" color="#b48ead" /> : null}
+      {!filtered ? <WHabitRow theme={t} label="Standup notes" meta="09:00–09:30 · streak 1" color="#d08770" /> : null}
       <Spacer />
-      <SmallCaps>{filtered ? "Showing habits tagged Health" : "Tap a row to complete / undo"}</SmallCaps>
+      <SmallCaps>{filtered ? "Showing habits tagged Health" : "Sorted by start time · Delay / Change Time Today"}</SmallCaps>
     </PhoneFrame>
   );
 }
@@ -275,11 +275,11 @@ function HabitsFrame({ filtered }: { filtered?: boolean }) {
         ]}
       />
       <Divider />
-      <WHabitRow theme={t} label="Morning walk" meta="active · Health" color="#a3be8c" />
-      {!filtered ? <WHabitRow theme={t} label="Drink water" meta="active · Health" color="#4f9dde" /> : null}
-      <WHabitRow theme={t} label="Standup notes" meta="active · Work" color="#d08770" />
+      <WHabitRow theme={t} label="Morning walk" meta="07:30 · 45 min · Health" color="#a3be8c" />
+      {!filtered ? <WHabitRow theme={t} label="Drink water" meta="07:30 · Health" color="#4f9dde" /> : null}
+      <WHabitRow theme={t} label="Standup notes" meta="09:00 · Work" color="#d08770" />
       <WHabitRow theme={t} label="Inbox zero" meta="paused · Work" color="#d08770" />
-      {!filtered ? <WHabitRow theme={t} label="Read 20 min" meta="active · Personal" color="#b48ead" /> : null}
+      {!filtered ? <WHabitRow theme={t} label="Read 20 min" meta="21:00 · Personal" color="#b48ead" /> : null}
       <Spacer />
       <SmallCaps>{filtered ? "Filter: Work" : "Filter view-only — data unchanged"}</SmallCaps>
     </PhoneFrame>
@@ -333,9 +333,17 @@ function EditFrame() {
         />
       </Stack>
       <Row align="center">
-        <Text size="small">Reminder</Text>
+        <Text size="small">Start time</Text>
         <Spacer />
-        <span style={{ fontSize: 10, color: t.accent.primary }}>08:00 ●</span>
+        <span style={{ fontSize: 10, color: t.accent.primary }}>07:30</span>
+      </Row>
+      <Row gap={6}>
+        <div style={{ flex: 1 }}>
+          <WField theme={t} label="Duration (optional)" value="45 min" />
+        </div>
+        <div style={{ flex: 1 }}>
+          <WField theme={t} label="End reminder" value="08:15 always" accent />
+        </div>
       </Row>
       <Stack gap={3}>
         <Text size="small" tone="tertiary" style={{ fontSize: 10 }}>
@@ -433,7 +441,7 @@ function TagsFrame() {
       </Row>
       <Row gap={8} align="center">
         {swatch("#a3be8c")}
-        <Text size="small">Morning</Text>
+        <Text size="small">Focus</Text>
       </Row>
       <Row gap={8} align="center">
         {swatch("#b48ead")}
@@ -477,6 +485,50 @@ function SettingsFrame() {
   );
 }
 
+function NotificationFrame() {
+  const t = useHostTheme();
+  return (
+    <PhoneFrame title="Start notification" caption="Actions on the lock screen">
+      <SmallCaps>7:30 AM</SmallCaps>
+      <Text weight="semibold" size="small">
+        Morning walk
+      </Text>
+      <Text size="small" tone="tertiary">
+        Start now · ends 8:15 even if you check off
+      </Text>
+      <Divider />
+      <WChips
+        theme={t}
+        chips={[
+          { label: "Complete", active: true },
+          { label: "Delay 15 min" },
+          { label: "Delay 1 hour" },
+          { label: "Change Time" },
+        ]}
+      />
+      <Spacer />
+      <SmallCaps>Delay / Change Time = today only</SmallCaps>
+    </PhoneFrame>
+  );
+}
+
+function RescheduleFrame() {
+  const t = useHostTheme();
+  return (
+    <PhoneFrame title="Change Time Today" caption="Does not change tomorrow">
+      <Text weight="semibold" size="small">
+        Morning walk
+      </Text>
+      <WField theme={t} label="Usual start" value="07:30" />
+      <WField theme={t} label="Today" value="08:00" accent />
+      <WField theme={t} label="End today" value="08:45 (shifted)" />
+      <WChips theme={t} chips={[{ label: "+15 min" }, { label: "+1 hour" }, { label: "Restore 07:30" }]} />
+      <Spacer />
+      <SmallCaps>Tomorrow returns to 07:30</SmallCaps>
+    </PhoneFrame>
+  );
+}
+
 // ---------- Flows ----------
 
 const FLOWS: { id: string; title: string; steps: string[] }[] = [
@@ -495,7 +547,7 @@ const FLOWS: { id: string; title: string; steps: string[] }[] = [
     steps: [
       "Habits → + Add",
       "Enter title; set start date (default today); optional end date",
-      "Toggle reminder → pick time → permission if needed",
+      "Toggle reminder → pick custom start time → optional duration (end always fires)",
       "Attach existing tags and/or create a new tag",
       "Save → appears on Today if start ≤ today ≤ end and active",
     ],
@@ -504,9 +556,10 @@ const FLOWS: { id: string; title: string; steps: string[] }[] = [
     id: "C",
     title: "C. Daily check-in",
     steps: [
-      "Open Today (optionally apply a tag filter)",
+      "Open Today — habits sorted by start time",
       "Tap habit → mark complete (undo supported)",
-      "Reminder fires at scheduled time if not yet completed",
+      "Start notification: Complete · Delay 15 · Delay 1h · Change Time",
+      "Complete cancels start reminders; duration-end still fires",
     ],
   },
   {
@@ -534,6 +587,15 @@ const FLOWS: { id: string; title: string; steps: string[] }[] = [
     steps: [
       "From the habit editor or Tags screen → create / rename / delete",
       "Deleting a tag unassigns it from habits (habits remain)",
+    ],
+  },
+  {
+    id: "G",
+    title: "G. Delay / Change Time today",
+    steps: [
+      "From notification or Today, Delay 15 / Delay 1 hour or pick a custom time",
+      "Today’s start and duration-end shift by the same offset",
+      "Tomorrow uses the usual start time again",
     ],
   },
 ];
@@ -588,9 +650,11 @@ const REQ_ROWS: [string, string, string][] = [
   ["Streaks", "Current streak on Today; current + longest on detail", MUST],
   ["Streaks", "Derived from completion history (recompute on edit)", MUST],
   ["Onboarding", "First-launch starter templates (local, skippable)", MUST],
-  ["Reminders", "Local notification on scheduled days; one per habit/day", MUST],
+  ["Reminders", "Custom start time on every scheduled day (not AM/PM buckets)", MUST],
+  ["Reminders", "Optional duration; end reminder at start + duration always fires", MUST],
   ["Reminders", "Permission on first enable; reschedule on edit; cancel on pause/delete", MUST],
-  ["Reminders", "Cancelled / suppressed once completed that day", MUST],
+  ["Reminders", "Complete cancels start reminders only; duration-end still fires", MUST],
+  ["Reminders", "Delay 15 / Delay 1h / Change Time apply to today only", MUST],
   ["Tags & filter", "Create tags; assign 0..n per habit; filter (match any)", MUST],
   ["Today", "Scheduled + filtered checklist; complete / undo", MUST],
   ["Habits", "Complete past days in range; pause / resume", SHOULD],
@@ -598,16 +662,16 @@ const REQ_ROWS: [string, string, string][] = [
 ];
 
 const DATA_ROWS: [string, string][] = [
-  ["Habit", "title, notes?, color, icon, startDate, endDate?, frequencyType, weekdays[], reminderEnabled, reminderTime?, status"],
+  ["Habit", "title, color, icon, dates, frequency, startTime, durationMinutes?, status"],
   ["Tag", "name, color"],
   ["Completion", "habitId, date, done"],
+  ["DayOverride", "habitId, date, overrideTime (today only)"],
 ];
 
 const PHASE2 = [
   "Advanced recurrence (every N days, N×/week, monthly)",
   "Calendar heatmap + on-device insights",
   "Skip / vacation days (streak forgiveness)",
-  "Time-of-day sections (Morning / Afternoon / Evening)",
   "Widgets, Siri Shortcuts, Apple Watch (all offline)",
   "Appearance (light/dark) + haptics on complete",
   "Quantified & avoidance habits; per-day notes",
@@ -634,15 +698,14 @@ export default function HabitTrackerPlan() {
           <Pill active>iOS · MVP</Pill>
         </Row>
         <Text tone="secondary" style={{ maxWidth: 720 }}>
-          A fully offline iOS habit tracker: create habits with a color, icon, daily or weekday
-          schedule, start/end date, and a smart local reminder; tag them, track streaks, and check
-          them off. Onboarding templates get users started. The app never communicates with the
-          internet — all data stays on-device.
+          A fully offline iOS habit tracker: custom start time, optional duration with an end
+          reminder that always fires, same-day delay or Change Time, tags, and streaks. Morning /
+          Afternoon / Evening buckets are not used. The app never communicates with the internet.
         </Text>
         <Row gap={8} wrap>
-          <Pill active>In scope: habits · schedule · streaks · reminders · tags · templates</Pill>
+          <Pill active>Custom start · duration-end · today-only delay</Pill>
           <Pill active>Hard rule: no internet</Pill>
-          <Pill>Later: heatmap · widgets · Shortcuts (still offline)</Pill>
+          <Pill>Canonical repo: /Users/pravar/Apps/HabitTrackerApp</Pill>
         </Row>
         <Callout tone="warning" title="Offline-only (hard constraint)">
           The app must never communicate with the internet — no accounts, analytics, ads, iCloud /
@@ -653,10 +716,10 @@ export default function HabitTrackerPlan() {
 
       {/* Stats */}
       <Grid columns={4} gap={12}>
-        <Stat value="6" label="MVP screens" />
-        <Stat value="3" label="Data entities" />
-        <Stat value="16" label="Must-have reqs" tone="success" />
-        <Stat value="6" label="User flows" tone="info" />
+        <Stat value="10" label="Wireframes" />
+        <Stat value="4" label="Data entities" />
+        <Stat value="18" label="Must-have reqs" tone="success" />
+        <Stat value="7" label="User flows" tone="info" />
       </Grid>
 
       <Divider />
@@ -678,13 +741,15 @@ export default function HabitTrackerPlan() {
           <HabitsFrame />
           <HabitsFrame filtered />
           <EditFrame />
+          <NotificationFrame />
+          <RescheduleFrame />
           <TagsFrame />
           <SettingsFrame />
         </Row>
-        <Callout tone="info" title="Tag filter behavior">
-          Filtering is view-only and never changes data. A habit matches when it has{" "}
-          <Text weight="semibold">any</Text> of the selected tags. Clearing returns to{" "}
-          <Code>All</Code>.
+        <Callout tone="info" title="Reminders (locked)">
+          Start at a custom clock time every scheduled day. Optional duration fires an end reminder at
+          start + duration even if already complete. Delay 15 min, Delay 1 hour, and Change Time apply
+          to today only.
         </Callout>
       </Stack>
 
@@ -743,8 +808,8 @@ export default function HabitTrackerPlan() {
             rows={DATA_ROWS.map(([e, f]) => [<Code>{e}</Code>, f])}
           />
           <Text size="small" tone="tertiary">
-            Habit 1—* Completion · Habit *—* Tag. Deleting a habit removes its completions and
-            cancels notifications; deleting a tag only unassigns it.
+            Habit 1—* Completion · Habit 1—* DayOverride · Habit *—* Tag. Completing cancels start
+            reminders only; duration-end still fires.
           </Text>
         </Stack>
 
@@ -786,8 +851,8 @@ export default function HabitTrackerPlan() {
 
       <Divider />
       <Text size="small" tone="tertiary">
-        Source of truth: Habit Tracker/plan/ · Scope: habits, reminders, start/end dates, tags with
-        filtering · Hard rule: no internet communication
+        Source of truth: /Users/pravar/Apps/HabitTrackerApp/plan · Custom start + duration-end ·
+        Hard rule: no internet communication
       </Text>
     </Stack>
   );

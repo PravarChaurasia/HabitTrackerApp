@@ -67,11 +67,16 @@ When building: do not enable the App Transport / network capabilities beyond wha
 
 | Priority | Requirement |
 |----------|-------------|
-| Must | Local notification at chosen time on active, scheduled habit days |
+| Must | Custom **start time** (clock picker), not Morning / Afternoon / Evening buckets |
+| Must | Local start notification at that time on every scheduled day |
+| Must | Optional **duration**; when set, a second notification fires at `effective start + duration` |
+| Must | Duration/end notification **always fires**, even if the habit was already completed |
 | Must | Request notification permission on first reminder enable |
-| Must | Updating reminder time reschedules; delete/pause cancels pending notifications |
-| Must | Reminder is cancelled / suppressed once the habit is completed for that day |
-| Must | No more than one reminder per habit per day |
+| Must | Updating the usual start time reschedules future days; delete/pause cancels pending notifications |
+| Must | Completing the habit cancels remaining **start** reminders for that day, not the duration-end reminder |
+| Must | From the start notification: Complete; Delay 15 min; Delay 1 hour; Change Time (opens app) |
+| Must | Delay / Change Time apply to **today only**; tomorrow uses the usual start time |
+| Must | Changing today’s start also shifts today’s duration-end by the same offset |
 
 ### Tags & filter
 
@@ -96,6 +101,7 @@ When building: do not enable the App Transport / network capabilities beyond wha
 - Accounts, cloud sync, social/gamification cloud, analytics, ads, remote config
 - Apple Health / Google Fit cloud sync, Zapier / public APIs
 - Widgets, Siri Shortcuts, Apple Watch (Phase 2 candidates; still offline-only)
+- Time-of-day list sections (Morning / Afternoon / Evening) — replaced by custom clock times
 - Advanced recurrence (N times/week, every N days, monthly) — Phase 2
 - Quantified habits, avoidance habits, per-day notes, heatmap — Phase 2
 - One-off todos / Later inbox
@@ -103,9 +109,10 @@ When building: do not enable the App Transport / network capabilities beyond wha
 
 ## Screens (MVP)
 
-1. **Today** — scheduled + tag-filtered checklist with per-habit streak, mark done, empty state with templates
+1. **Today** — chronological checklist by effective start time; streak; complete; Delay / Change Time Today
 2. **Habits** — all habits (color/icon, status, tags), tag filter chips, add habit
-3. **Habit detail / edit** — title, notes, color/icon, dates, frequency (weekdays), reminder, tags, streaks, pause, delete
-4. **Tags manage** — create/rename/delete tags
-5. **Settings** — notification status, appearance, offline note, app preferences
-6. **Onboarding / templates** — first-launch starter habit picker (skippable)
+3. **Habit detail / edit** — title, notes, color/icon, dates, frequency, **start time**, optional **duration**, tags, streaks, pause, delete
+4. **Same-day reschedule** — sheet: usual vs today’s time, delay chips, custom picker, restore usual
+5. **Tags manage** — create/rename/delete tags
+6. **Settings** — notification status, appearance, offline note, app preferences
+7. **Onboarding / templates** — first-launch starter habit picker (skippable)

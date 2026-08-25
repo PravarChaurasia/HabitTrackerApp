@@ -21,13 +21,13 @@ struct HabitEditorView: View {
     @State private var timesPerWeek = 3
     @State private var dayOfMonth = 1
     @State private var reminderEnabled = false
-    @State private var reminderTimes: [ReminderTime] = [ReminderTime(hour: 8, minute: 0)]
-    @State private var snoozeMinutes = 10
+    @State private var reminderTime = ReminderTime(hour: 8, minute: 0)
+    @State private var durationEnabled = false
+    @State private var durationMinutes = 30
     @State private var status: HabitStatus = .active
     @State private var kind: HabitKind = .build
     @State private var trackingMode: TrackingMode = .binary
     @State private var targetValue: Double = 1
-    @State private var timeOfDay: TimeOfDaySlot = .anytime
     @State private var isArchived = false
     @State private var selectedTagIDs: Set<UUID> = []
     @State private var newTagName = ""
@@ -57,9 +57,6 @@ struct HabitEditorView: View {
             Section("Look") {
                 colorPicker
                 iconPicker
-                Picker("Time of day", selection: $timeOfDay) {
-                    ForEach(TimeOfDaySlot.allCases) { Text($0.title).tag($0) }
-                }
             }
 
             Section("Schedule") {
@@ -77,22 +74,24 @@ struct HabitEditorView: View {
             Section("Reminder") {
                 Toggle("Remind me", isOn: $reminderEnabled)
                 if reminderEnabled {
-                    ForEach(Array(reminderTimes.enumerated()), id: \.offset) { index, time in
-                        DatePicker(
-                            "Time \(index + 1)",
-                            selection: bindingTime(at: index),
-                            displayedComponents: .hourAndMinute
+                    DatePicker(
+                        "Start time",
+                        selection: reminderTimeBinding,
+                        displayedComponents: .hourAndMinute
+                    )
+                    Toggle("Duration and end reminder", isOn: $durationEnabled)
+                    if durationEnabled {
+                        Stepper(
+                            "Duration: \(durationLabel)",
+                            value: $durationMinutes,
+                            in: 5...720,
+                            step: 5
                         )
+                        LabeledContent("End reminder", value: endReminderLabel)
+                        Text("The end reminder always fires, even after you complete the habit.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
                     }
-                    Button("Add time") {
-                        reminderTimes.append(ReminderTime(hour: 12, minute: 0))
-                    }
-                    if reminderTimes.count > 1 {
-                        Button("Remove last time", role: .destructive) {
-                            _ = reminderTimes.popLast()
-                        }
-                    }
-                    Stepper("Snooze minutes: \(snoozeMinutes)", value: $snoozeMinutes, in: 5...60, step: 5)
                 }
             }
 
@@ -245,17 +244,40 @@ struct HabitEditorView: View {
         }
     }
 
-    private func bindingTime(at index: Int) -> Binding<Date> {
+    private var reminderTimeBinding: Binding<Date> {
         Binding(
             get: {
-                let t = reminderTimes[index]
-                return Calendar.current.date(bySettingHour: t.hour, minute: t.minute, second: 0, of: Date()) ?? Date()
+                Calendar.current.date(
+                    bySettingHour: reminderTime.hour,
+                    minute: reminderTime.minute,
+                    second: 0,
+                    of: Date()
+                ) ?? Date()
             },
             set: { date in
                 let c = Calendar.current.dateComponents([.hour, .minute], from: date)
-                reminderTimes[index] = ReminderTime(hour: c.hour ?? 8, minute: c.minute ?? 0)
+                reminderTime = ReminderTime(hour: c.hour ?? 8, minute: c.minute ?? 0)
             }
         )
+    }
+
+    private var durationLabel: String {
+        let hours = durationMinutes / 60
+        let minutes = durationMinutes % 60
+        if hours == 0 { return "\(minutes) min" }
+        if minutes == 0 { return "\(hours) hr" }
+        return "\(hours) hr \(minutes) min"
+    }
+
+    private var endReminderLabel: String {
+        let start = Calendar.current.date(
+            bySettingHour: reminderTime.hour,
+            minute: reminderTime.minute,
+            second: 0,
+            of: Date()
+        ) ?? Date()
+        let end = Calendar.current.date(byAdding: .minute, value: durationMinutes, to: start) ?? start
+        return end.formatted(date: .omitted, time: .shortened)
     }
 
     private func load() {
@@ -275,13 +297,13 @@ struct HabitEditorView: View {
         timesPerWeek = habit.timesPerWeek
         dayOfMonth = habit.dayOfMonth
         reminderEnabled = habit.reminderEnabled
-        reminderTimes = habit.reminderTimes
-        snoozeMinutes = habit.snoozeMinutes
+        reminderTime = habit.startTime
+        durationEnabled = habit.durationReminderEnabled && habit.durationMinutes != nil
+        durationMinutes = habit.durationMinutes ?? 30
         status = habit.status == .archived ? .paused : habit.status
         kind = habit.kind
         trackingMode = habit.trackingMode
         targetValue = habit.targetValue
-        timeOfDay = habit.timeOfDay
         isArchived = habit.isArchived || habit.status == .archived
         selectedTagIDs = Set(habit.tags.map(\.id))
         todayNote = HabitScheduling.completion(on: Date(), habit: habit)?.note ?? ""
@@ -328,14 +350,15 @@ struct HabitEditorView: View {
         target.timesPerWeek = timesPerWeek
         target.dayOfMonth = dayOfMonth
         target.reminderEnabled = reminderEnabled
-        target.reminderTimes = reminderTimes.isEmpty ? [ReminderTime(hour: 8, minute: 0)] : reminderTimes
-        target.snoozeMinutes = snoozeMinutes
+        target.startTime = reminderTime
+        target.durationMinutes = durationEnabled ? durationMinutes : nil
+        target.durationReminderEnabled = durationEnabled
+        target.extraReminderTimesRaw = ""
         target.status = isArchived ? .archived : status
         target.isArchived = isArchived
         target.kind = kind
         target.trackingMode = trackingMode
         target.targetValue = targetValue
-        target.timeOfDay = timeOfDay
         target.tags = allTags.filter { selectedTagIDs.contains($0.id) }
 
         try? modelContext.save()

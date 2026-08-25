@@ -5,7 +5,7 @@ enum SharedStore {
     static let appGroupID = "group.com.local.HabitTracker"
 
     static func makeContainer() throws -> ModelContainer {
-        let schema = Schema([Habit.self, Tag.self, Completion.self])
+        let schema = Schema([Habit.self, HabitDayOverride.self, Tag.self, Completion.self])
         let url: URL
         if let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupID) {
             url = containerURL.appendingPathComponent("HabitTracker.store")

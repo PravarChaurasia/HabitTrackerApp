@@ -17,9 +17,22 @@ Local-first, on-device storage only. No backend and no internet communication �
 | endDate | date? | Optional; open-ended if absent |
 | frequencyType | string | `daily` or `weekdays` for MVP |
 | weekdays | int[] | Selected weekdays (1–7) when `frequencyType = weekdays` |
-| reminderEnabled | bool | Whether a local notification is scheduled |
-| reminderTime | time? | Time of day for the reminder |
+| reminderEnabled | bool | Whether local notifications are scheduled |
+| reminderTime | time | Custom start time, same clock time on every scheduled day |
+| durationMinutes | int? | Optional window; end reminder at start + duration |
+| durationReminderEnabled | bool | When true, fire end notification even if completed |
 | status | string | `active` / `paused` / `ended` |
+
+### HabitDayOverride
+
+| Field | Type | Notes |
+|-------|------|-------|
+| id | string | Unique identifier |
+| habitId | string | Owning habit |
+| date | date | Local calendar day |
+| overrideTime | time | Today-only start (delay or Change Time) |
+
+One override per habit per day. Tomorrow ignores it.
 
 ### Tag
 
@@ -42,11 +55,12 @@ Local-first, on-device storage only. No backend and no internet communication �
 
 - A Habit has many Completions (one per completed day).
 - A Habit has many Tags; a Tag applies to many Habits (many-to-many).
-- Deleting a Habit deletes its Completions and cancels its notifications.
+- Deleting a Habit deletes its Completions and day overrides, and cancels its notifications.
 - Deleting a Tag unassigns it from Habits but does not delete the Habits.
 
 ```
 Habit 1 ── * Completion
+Habit 1 ── * HabitDayOverride
 Habit * ── * Tag
 ```
 

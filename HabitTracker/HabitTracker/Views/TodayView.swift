@@ -10,6 +10,8 @@ struct TodayView: View {
     @State private var showingTemplates = false
     @State private var noteHabit: Habit?
     @State private var noteText = ""
+    @State private var rescheduleHabit: Habit?
+    @State private var rescheduleTime = Date()
 
     private var todayHabits: [Habit] {
         habits.filter { habit in
@@ -17,13 +19,11 @@ struct TodayView: View {
             guard HabitScheduling.isScheduled(on: Date(), habit: habit) else { return false }
             if selectedTagIDs.isEmpty { return true }
             return habit.tags.contains { selectedTagIDs.contains($0.id) }
-        }
-    }
-
-    private var grouped: [(TimeOfDaySlot, [Habit])] {
-        TimeOfDaySlot.allCases.compactMap { slot in
-            let items = todayHabits.filter { effectiveSlot(for: $0) == slot }
-            return items.isEmpty ? nil : (slot, items)
+        }.sorted {
+            let lhs = HabitScheduling.effectiveStartDate(on: Date(), habit: $0)
+            let rhs = HabitScheduling.effectiveStartDate(on: Date(), habit: $1)
+            if lhs == rhs { return $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending }
+            return lhs < rhs
         }
     }
 
@@ -50,15 +50,11 @@ struct TodayView: View {
                     .frame(maxHeight: .infinity)
                 } else {
                     List {
-                        ForEach(grouped, id: \.0) { slot, items in
-                            Section(slot.title) {
-                                ForEach(items, id: \.id) { habit in
-                                    todayRow(habit)
-                                }
-                            }
+                        ForEach(todayHabits, id: \.id) { habit in
+                            todayRow(habit)
                         }
                     }
-                    .listStyle(.insetGrouped)
+                    .listStyle(.plain)
                 }
             }
             .navigationTitle("Today")
@@ -97,6 +93,18 @@ struct TodayView: View {
                 }
                 .presentationDetents([.medium])
             }
+            .sheet(item: $rescheduleHabit) { habit in
+                rescheduleSheet(habit)
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .habitChangeTimeRequested)) { note in
+                guard let id = note.object as? UUID else { return }
+                openChangeTime(for: id)
+            }
+            .onAppear {
+                guard let raw = UserDefaults.standard.string(forKey: "pendingChangeTimeHabitID"),
+                      let id = UUID(uuidString: raw) else { return }
+                openChangeTime(for: id)
+            }
         }
     }
 
@@ -113,7 +121,7 @@ struct TodayView: View {
                     habit: habit,
                     showCheckbox: habit.trackingMode == .binary,
                     isDone: done || (habit.kind == .avoid && done),
-                    subtitleExtra: skipped ? "Skipped" : quantifiedLabel(habit)
+                    subtitleExtra: skipped ? "Skipped" : rowSubtitle(habit)
                 ) {
                     HabitActions.toggleBinary(habit: habit, context: modelContext)
                 }
@@ -139,17 +147,122 @@ struct TodayView: View {
         }
         .swipeActions(edge: .leading) {
             if habit.reminderEnabled {
-                Button("Snooze") {
-                    Task { await ReminderScheduler.snooze(habit: habit) }
+                Button("+15m") {
+                    ReminderScheduler.delayToday(habit: habit, minutes: 15, context: modelContext)
                 }
                 .tint(.purple)
+                Button("+1h") {
+                    ReminderScheduler.delayToday(habit: habit, minutes: 60, context: modelContext)
+                }
+                .tint(.indigo)
+                Button("Time") {
+                    presentChangeTime(for: habit)
+                }
+                .tint(.blue)
             }
         }
     }
 
-    private func effectiveSlot(for habit: Habit) -> TimeOfDaySlot {
-        if habit.timeOfDay != .anytime { return habit.timeOfDay }
-        return TimeOfDaySlot.inferred(hour: habit.reminderHour)
+    @ViewBuilder
+    private func rescheduleSheet(_ habit: Habit) -> some View {
+        NavigationStack {
+            Form {
+                Section {
+                    LabeledContent("Usual start", value: timeLabel(habit.startTime))
+                    DatePicker(
+                        "Today",
+                        selection: $rescheduleTime,
+                        displayedComponents: .hourAndMinute
+                    )
+                    if let duration = habit.durationMinutes, habit.durationReminderEnabled {
+                        LabeledContent(
+                            "End today",
+                            value: rescheduleTime
+                                .addingTimeInterval(TimeInterval(duration * 60))
+                                .formatted(date: .omitted, time: .shortened)
+                        )
+                    }
+                } footer: {
+                    Text("This change applies only today. Tomorrow returns to \(timeLabel(habit.startTime)).")
+                }
+
+                Section("Quick changes") {
+                    Button("Delay 15 minutes") {
+                        ReminderScheduler.delayToday(habit: habit, minutes: 15, context: modelContext)
+                        rescheduleHabit = nil
+                    }
+                    Button("Delay 1 hour") {
+                        ReminderScheduler.delayToday(habit: habit, minutes: 60, context: modelContext)
+                        rescheduleHabit = nil
+                    }
+                    if HabitScheduling.dayOverride(on: Date(), habit: habit) != nil {
+                        Button("Restore usual time") {
+                            ReminderScheduler.restoreUsualTime(habit: habit, context: modelContext)
+                            rescheduleHabit = nil
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Change Time Today")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { rescheduleHabit = nil }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        ReminderScheduler.setOverride(
+                            habit: habit,
+                            startDate: rescheduleTime,
+                            context: modelContext
+                        )
+                        rescheduleHabit = nil
+                    }
+                }
+            }
+        }
+        .presentationDetents([.medium])
+    }
+
+    private func presentChangeTime(for habit: Habit) {
+        rescheduleTime = HabitScheduling.effectiveStartDate(on: Date(), habit: habit)
+        rescheduleHabit = habit
+    }
+
+    private func openChangeTime(for id: UUID) {
+        guard let habit = habits.first(where: { $0.id == id }) else { return }
+        UserDefaults.standard.removeObject(forKey: "pendingChangeTimeHabitID")
+        presentChangeTime(for: habit)
+    }
+
+    private func rowSubtitle(_ habit: Habit) -> String {
+        var parts = [effectiveTimeLabel(habit)]
+        if let quantified = quantifiedLabel(habit) {
+            parts.append(quantified)
+        }
+        return parts.joined(separator: " · ")
+    }
+
+    private func effectiveTimeLabel(_ habit: Habit) -> String {
+        let start = HabitScheduling.effectiveStartDate(on: Date(), habit: habit)
+        var label = start.formatted(date: .omitted, time: .shortened)
+        if let end = HabitScheduling.effectiveEndDate(on: Date(), habit: habit) {
+            label += "–\(end.formatted(date: .omitted, time: .shortened))"
+        }
+        if HabitScheduling.dayOverride(on: Date(), habit: habit) != nil {
+            label += " · Today changed"
+        }
+        return label
+    }
+
+    private func timeLabel(_ time: ReminderTime) -> String {
+        let date = Calendar.current.date(
+            bySettingHour: time.hour,
+            minute: time.minute,
+            second: 0,
+            of: Date()
+        ) ?? Date()
+        return date.formatted(date: .omitted, time: .shortened)
     }
 
     private func quantifiedLabel(_ habit: Habit) -> String? {

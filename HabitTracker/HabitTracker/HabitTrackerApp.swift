@@ -5,6 +5,10 @@ import SwiftData
 struct HabitTrackerApp: App {
     @AppStorage("appearanceMode") private var appearanceMode = "system"
 
+    init() {
+        ReminderNotificationDelegate.configure()
+    }
+
     var sharedModelContainer: ModelContainer = {
         do {
             return try SharedStore.makeContainer()

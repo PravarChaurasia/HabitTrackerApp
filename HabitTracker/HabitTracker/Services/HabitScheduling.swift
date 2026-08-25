@@ -1,6 +1,33 @@
 import Foundation
 
 enum HabitScheduling {
+    static func dayOverride(on date: Date, habit: Habit) -> HabitDayOverride? {
+        habit.dayOverrides.first { CalendarDay.isSameDay($0.date, date) }
+    }
+
+    static func effectiveStartTime(on date: Date, habit: Habit) -> ReminderTime {
+        dayOverride(on: date, habit: habit)?.overrideTime ?? habit.startTime
+    }
+
+    static func effectiveStartDate(on date: Date, habit: Habit) -> Date {
+        let time = effectiveStartTime(on: date, habit: habit)
+        var components = CalendarDay.calendar.dateComponents([.year, .month, .day], from: date)
+        components.hour = time.hour
+        components.minute = time.minute
+        return CalendarDay.calendar.date(from: components) ?? CalendarDay.startOfDay(date)
+    }
+
+    static func effectiveEndDate(on date: Date, habit: Habit) -> Date? {
+        guard habit.durationReminderEnabled,
+              let duration = habit.durationMinutes,
+              duration > 0 else { return nil }
+        return CalendarDay.calendar.date(
+            byAdding: .minute,
+            value: duration,
+            to: effectiveStartDate(on: date, habit: habit)
+        )
+    }
+
     static func isScheduled(on date: Date, habit: Habit) -> Bool {
         guard habit.status == .active, !habit.isArchived else { return false }
 

@@ -10,7 +10,6 @@ The app **must never communicate with the internet**. Phase 2 features stay on-d
 - Calendar / heatmap history view per habit
 - On-device insights: completion rate, weekly/monthly trends
 - Skip / vacation days that do not break a streak (streak forgiveness)
-- Time-of-day sections (Morning / Afternoon / Evening) or sort by reminder time
 - Home screen and Lock Screen widgets (local data only)
 - Siri Shortcuts / App Intents to log a habit without opening the app (offline)
 - Apple Watch companion (local / WatchConnectivity peer transfer only — no cloud)
@@ -18,9 +17,11 @@ The app **must never communicate with the internet**. Phase 2 features stay on-d
 - Quantified habits (target count or duration, e.g. 8 glasses, 30 min)
 - Avoidance / negative habits ("did not do X")
 - Per-day completion note / short journal entry
-- Reminders with multiple times per day / smart snooze
+- Extra reminder times beyond start + duration-end
 - Habit archiving and reordering
 - Local data export/import (file share / AirDrop — not cloud upload)
+
+Custom start time, duration-end reminder, and today-only delay/change-time are **current product rules** (not Phase 2). Time-of-day buckets (Morning / Afternoon / Evening) are **removed**.
 
 ## Explicitly out of scope (violates offline rule)
 

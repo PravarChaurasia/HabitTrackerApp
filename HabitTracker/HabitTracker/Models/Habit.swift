@@ -19,8 +19,13 @@ final class Habit {
     var reminderEnabled: Bool
     var reminderHour: Int
     var reminderMinute: Int
+    /// Optional scheduled window. When present, an end reminder fires at start + duration.
+    var durationMinutes: Int?
+    var durationReminderEnabled: Bool = false
     /// Extra times as "H:M,H:M"
+    /// Legacy export/migration field. The current product uses one custom start time.
     var extraReminderTimesRaw: String
+    /// Legacy export/migration field. Today-only delay uses HabitDayOverride.
     var snoozeMinutes: Int
     var statusRaw: String
     var kindRaw: String
@@ -37,6 +42,9 @@ final class Habit {
     @Relationship(inverse: \Tag.habits)
     var tags: [Tag] = []
 
+    @Relationship(deleteRule: .cascade, inverse: \HabitDayOverride.habit)
+    var dayOverrides: [HabitDayOverride] = []
+
     init(
         title: String,
         notes: String = "",
@@ -52,6 +60,8 @@ final class Habit {
         reminderEnabled: Bool = false,
         reminderHour: Int = 8,
         reminderMinute: Int = 0,
+        durationMinutes: Int? = nil,
+        durationReminderEnabled: Bool = false,
         extraReminderTimes: [ReminderTime] = [],
         snoozeMinutes: Int = 10,
         status: HabitStatus = .active,
@@ -77,6 +87,8 @@ final class Habit {
         self.reminderEnabled = reminderEnabled
         self.reminderHour = reminderHour
         self.reminderMinute = reminderMinute
+        self.durationMinutes = durationMinutes.map { max(1, $0) }
+        self.durationReminderEnabled = durationReminderEnabled && durationMinutes != nil
         self.extraReminderTimesRaw = Self.encodeTimes(extraReminderTimes)
         self.snoozeMinutes = max(0, snoozeMinutes)
         self.statusRaw = status.rawValue
@@ -150,6 +162,14 @@ final class Habit {
         }
     }
 
+    var startTime: ReminderTime {
+        get { ReminderTime(hour: reminderHour, minute: reminderMinute) }
+        set {
+            reminderHour = min(23, max(0, newValue.hour))
+            reminderMinute = min(59, max(0, newValue.minute))
+        }
+    }
+
     var isVisibleInLists: Bool {
         !isArchived && status != .archived && status != .ended
     }
@@ -163,6 +183,31 @@ final class Habit {
             let bits = part.split(separator: ":")
             guard bits.count == 2, let h = Int(bits[0]), let m = Int(bits[1]) else { return nil }
             return ReminderTime(hour: h, minute: m)
+        }
+    }
+}
+
+@Model
+final class HabitDayOverride {
+    var id: UUID
+    var date: Date
+    var overrideHour: Int
+    var overrideMinute: Int
+    var habit: Habit?
+
+    init(date: Date, overrideTime: ReminderTime, habit: Habit? = nil) {
+        self.id = UUID()
+        self.date = CalendarDay.startOfDay(date)
+        self.overrideHour = min(23, max(0, overrideTime.hour))
+        self.overrideMinute = min(59, max(0, overrideTime.minute))
+        self.habit = habit
+    }
+
+    var overrideTime: ReminderTime {
+        get { ReminderTime(hour: overrideHour, minute: overrideMinute) }
+        set {
+            overrideHour = min(23, max(0, newValue.hour))
+            overrideMinute = min(59, max(0, newValue.minute))
         }
     }
 }

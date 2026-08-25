@@ -2,20 +2,23 @@
 
 Product planning and pre-development analysis for the Habit Tracker iOS app. This folder is the source of truth; the interactive canvas mirrors it for side-by-side viewing.
 
+**Canonical repo / workspace:** `/Users/pravar/Apps/HabitTrackerApp` (GitHub: `PravarChaurasia/HabitTrackerApp`). Open that folder in Cursor so plan, canvas, and Xcode project stay in one place.
+
 ## Scope (locked)
 
-- Habits with color/icon, reminder, start/end date, and a daily or weekday schedule
+- Habits with color/icon, **custom start time**, optional **duration + end reminder**, start/end date, and a daily or weekday schedule
 - Current + longest streaks, tags with filtering, first-launch templates
+- Same-day delay / change-time (does not change tomorrow’s usual time)
 - **Fully offline:** no internet / network communication of any kind (hard constraint)
-- This pass: requirements + step-by-step flows + low-fidelity UI wireframes
-- Not in this pass: iOS project, accounts, cloud sync, or "Later/Inbox" todos
+- This pass: requirements + step-by-step flows + low-fidelity UI wireframes + SwiftUI app
+- Not in this pass: accounts, cloud sync, or "Later/Inbox" todos
 
 ## Documents
 
 | File | Contents |
 |------|----------|
 | [requirements.md](requirements.md) | MVP requirements (Must / Should / Later), non-goals |
-| [user-flows.md](user-flows.md) | Flows A–F, step-by-step |
+| [user-flows.md](user-flows.md) | Flows A–G, step-by-step |
 | [ui-wireframes.md](ui-wireframes.md) | Screen inventory + wireframe specs |
 | [data-model.md](data-model.md) | Habit / Tag / Completion fields and relationships |
 | [competitor-gap-analysis.md](competitor-gap-analysis.md) | Comparison vs leading apps and decisions taken |
@@ -41,7 +44,7 @@ cp plan/canvas/habit-tracker-requirements.canvas.tsx \
   ~/.cursor/projects/<workspace-id>/canvases/
 ```
 
-Replace `<workspace-id>` with the folder matching this workspace path (for example `Users-pravar-Habit-Tracker`); list `~/.cursor/projects/` to find it.
+Replace `<workspace-id>` with the folder matching this workspace path (for example `Users-pravar-Apps-HabitTrackerApp` after opening `/Users/pravar/Apps/HabitTrackerApp`); list `~/.cursor/projects/` to find it.
 
 3. Open the copied file in Cursor to view the canvas beside chat.
 

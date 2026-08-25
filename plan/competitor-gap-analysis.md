@@ -19,13 +19,14 @@ Fold all competitive **Must-have** functionality into the MVP where it can work 
 | Weekday frequency (Mon/Wed/Fri) | Streaks, Habitify, Loop | MVP Must (promoted) |
 | Habit color + icon | Streaks, Productive | MVP Must (added) |
 | Onboarding templates | Most | MVP Must (added) |
-| Cancel reminder when done | Best practice | MVP Must (tightened) |
-| Local day boundary / DST safe | Correctness | MVP Must (documented) |
+| Cancel start reminder when done | Best practice | Must — start only; duration-end still fires |
+| Custom start time + optional duration | Requested | Must (replaces time-of-day buckets) |
+| Same-day delay / Change Time | Requested | Must — today only |
 | Nx per week / monthly recurrence | Habitify, Strides | Phase 2 |
 | Calendar heatmap / history | Loop, Habitify, Way of Life | Phase 2 |
 | Stats (rate, trends) | Habitify, Loop, Strides | Phase 2 (on-device) |
 | Skip / vacation / flexible streak | Streaks | Phase 2 |
-| Time-of-day routine sections | Productive, Habitify | Phase 2 |
+| Time-of-day routine sections | Productive, Habitify | **Out** — use clock times instead |
 | Widgets (Home / Lock Screen) | Streaks, Productive | Phase 2 (local data) |
 | Siri Shortcuts | Streaks | Phase 2 (offline OK) |
 | Apple Watch | Streaks | Phase 2 (peer/local) |
@@ -44,8 +45,9 @@ Fold all competitive **Must-have** functionality into the MVP where it can work 
 2. Weekday frequency: daily or specific weekdays (Mon–Sun multi-select).
 3. Habit color + simple icon for visual identity.
 4. First-launch templates: 4–6 offline starter presets, skippable.
-5. Reminder cancels/suppresses once the habit is completed for the day.
+5. Completing cancels remaining **start** reminders for that day; duration-end still fires.
 6. Local calendar day boundary (DST-safe) for "today" and streak math.
+7. Custom start time, optional duration-end (always), today-only delay / Change Time.
 
 ## Intentionally excluded (breaks offline rule)
 
