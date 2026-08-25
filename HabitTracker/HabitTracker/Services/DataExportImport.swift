@@ -10,6 +10,7 @@ enum DataExportImport {
         var habits: [HabitDTO]
         var tags: [TagDTO]
         var completions: [CompletionDTO]
+        var dayOverrides: [HabitDayOverrideDTO]?
     }
 
     struct HabitDTO: Codable {
@@ -28,6 +29,8 @@ enum DataExportImport {
         var reminderEnabled: Bool
         var reminderHour: Int
         var reminderMinute: Int
+        var durationMinutes: Int?
+        var durationReminderEnabled: Bool?
         var extraReminderTimesRaw: String
         var snoozeMinutes: Int
         var statusRaw: String
@@ -56,6 +59,14 @@ enum DataExportImport {
         var value: Double
     }
 
+    struct HabitDayOverrideDTO: Codable {
+        var id: UUID
+        var habitID: UUID
+        var date: Date
+        var overrideHour: Int
+        var overrideMinute: Int
+    }
+
     static func exportJSON(habits: [Habit], tags: [Tag]) throws -> Data {
         let snapshot = Snapshot(
             exportedAt: Date(),
@@ -76,6 +87,8 @@ enum DataExportImport {
                     reminderEnabled: h.reminderEnabled,
                     reminderHour: h.reminderHour,
                     reminderMinute: h.reminderMinute,
+                    durationMinutes: h.durationMinutes,
+                    durationReminderEnabled: h.durationReminderEnabled,
                     extraReminderTimesRaw: h.extraReminderTimesRaw,
                     snoozeMinutes: h.snoozeMinutes,
                     statusRaw: h.statusRaw,
@@ -101,6 +114,17 @@ enum DataExportImport {
                         value: c.value
                     )
                 }
+            },
+            dayOverrides: habits.flatMap { h in
+                h.dayOverrides.map { item in
+                    HabitDayOverrideDTO(
+                        id: item.id,
+                        habitID: h.id,
+                        date: item.date,
+                        overrideHour: item.overrideHour,
+                        overrideMinute: item.overrideMinute
+                    )
+                }
             }
         )
         let encoder = JSONEncoder()
@@ -116,6 +140,7 @@ enum DataExportImport {
         let snapshot = try decoder.decode(Snapshot.self, from: data)
 
         if replace {
+            for item in try context.fetch(FetchDescriptor<HabitDayOverride>()) { context.delete(item) }
             for item in try context.fetch(FetchDescriptor<Completion>()) { context.delete(item) }
             for item in try context.fetch(FetchDescriptor<Habit>()) { context.delete(item) }
             for item in try context.fetch(FetchDescriptor<Tag>()) { context.delete(item) }
@@ -146,6 +171,8 @@ enum DataExportImport {
                 reminderEnabled: dto.reminderEnabled,
                 reminderHour: dto.reminderHour,
                 reminderMinute: dto.reminderMinute,
+                durationMinutes: dto.durationMinutes,
+                durationReminderEnabled: dto.durationReminderEnabled ?? false,
                 snoozeMinutes: dto.snoozeMinutes,
                 status: HabitStatus(rawValue: dto.statusRaw) ?? .active,
                 kind: HabitKind(rawValue: dto.kindRaw) ?? .build,
@@ -174,6 +201,17 @@ enum DataExportImport {
             )
             c.id = dto.id
             context.insert(c)
+        }
+
+        for dto in snapshot.dayOverrides ?? [] {
+            guard let habit = habitMap[dto.habitID] else { continue }
+            let item = HabitDayOverride(
+                date: dto.date,
+                overrideTime: ReminderTime(hour: dto.overrideHour, minute: dto.overrideMinute),
+                habit: habit
+            )
+            item.id = dto.id
+            context.insert(item)
         }
 
         try context.save()

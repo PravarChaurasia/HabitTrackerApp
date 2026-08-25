@@ -100,6 +100,11 @@ struct HabitRowView: View {
                     Text("Streak \(StreakCalculator.currentStreak(for: habit))")
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                    if subtitleExtra == nil, habit.reminderEnabled {
+                        Text(scheduleLabel)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
                     if let subtitleExtra, !subtitleExtra.isEmpty {
                         Text(subtitleExtra)
                             .font(.caption)
@@ -118,6 +123,16 @@ struct HabitRowView: View {
             Spacer(minLength: 0)
         }
         .contentShape(Rectangle())
+    }
+
+    private var scheduleLabel: String {
+        let start = HabitScheduling.effectiveStartDate(on: Date(), habit: habit)
+        var label = start.formatted(date: .omitted, time: .shortened)
+        if let duration = habit.durationMinutes, habit.durationReminderEnabled {
+            let end = start.addingTimeInterval(TimeInterval(duration * 60))
+            label += "–\(end.formatted(date: .omitted, time: .shortened))"
+        }
+        return label
     }
 }
 

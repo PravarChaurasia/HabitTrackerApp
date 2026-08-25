@@ -18,14 +18,14 @@ Fully offline SwiftUI + SwiftData habit tracker (MVP + Phase 2). Product require
 
 ### MVP
 - Today checklist, tags + filter, streaks, color/icon, templates
-- Daily or weekday schedules, local reminders, cancel-on-complete
+- Daily or weekday schedules, **custom start time**, optional **duration-end reminder** (always fires)
+- Same-day Delay 15 / Delay 1h / Change Time (today only)
 - On-device SwiftData (`cloudKitDatabase: .none`)
 
 ### Phase 2 (this build)
 - Advanced recurrence: every N days, N×/week, monthly
 - Heatmap + Insights tab (completion rate, streaks)
 - Skip / vacation days (streak forgiveness)
-- Time-of-day sections (Morning / Afternoon / Evening / Anytime)
 - Quantified habits (count / duration) and avoidance habits
 - Per-day completion notes; multi-reminder times + snooze
 - Archive + reorder habits

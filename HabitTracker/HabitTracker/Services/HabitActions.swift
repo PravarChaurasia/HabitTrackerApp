@@ -29,7 +29,7 @@ enum HabitActions {
         try? context.save()
         Haptics.success()
         Task {
-            await ReminderScheduler.cancelToday(habit: habit, on: day)
+            await ReminderScheduler.cancelStartToday(habit: habit, on: day)
             refreshWidget(context: context)
         }
     }
@@ -63,7 +63,7 @@ enum HabitActions {
         try? context.save()
         Haptics.light()
         Task {
-            await ReminderScheduler.cancelToday(habit: habit, on: day)
+            await ReminderScheduler.cancelStartToday(habit: habit, on: day)
             refreshWidget(context: context)
         }
     }
@@ -81,7 +81,7 @@ enum HabitActions {
         try? context.save()
         if completion.done {
             Haptics.success()
-            Task { await ReminderScheduler.cancelToday(habit: habit, on: day) }
+            Task { await ReminderScheduler.cancelStartToday(habit: habit, on: day) }
         } else {
             Haptics.light()
         }
